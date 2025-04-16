@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: linear-gradient(175deg,rgba(75, 73, 209, 1) 0%, rgba(56, 56, 194, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
+.inicio{
+    background: radial-gradient(circle,rgba(75, 73, 209, 1) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
+#ingresarTareas{
+    border-radius: 25% 10%;
+    background-color:rgba(255,255,255,0.3); 
+    backdrop-filter: blur(10px);
+    border: solid 1px rgba(255, 255, 255, 05);
+    box-shadow: 0 4px 8px 0 rgba(235, 158, 158, 0.2), 0 6px 20px 0 rgba(207, 135, 135, 0.19);
+}
+h1{
+    color: rgba(234, 154, 104, 0.745);
+    text-align: center;
+    font-size: 55px;
+    text-shadow: 2px 2px 4px #cca36bcc;
+    font-weight: bold;
+}
+h2{
+    color: rgb(228, 4, 4);
+    font-weight: bold;
+}
+#encabezado{
+    color:blueviolet;
+}
+.verde{
+    background: green ;
+}
+.amarillo{
+    background: yellow ;
+}
+.rojo{
+    background: red ;
+}
+.pie{
+    background: rgba(255,255,255,0.3);
+    color: brown;
+}
