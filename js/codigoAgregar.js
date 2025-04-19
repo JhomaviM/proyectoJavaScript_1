@@ -1,8 +1,13 @@
 
+// Matrices de datos de tareas
 let acciones = localStorage.getItem('matrizTareas');
 let tareasHacer = acciones ? JSON.parse(acciones) : [];
 imprimirDatos(tareasHacer, 'datosTareas');
+let termi = localStorage.getItem('matrizTerminadas');
+let tareasTerminadas = termi ? JSON.parse(termi) : [];
+imprimirDatos(tareasTerminadas, 'datosTareasTerminadas');
 
+// Botones de acciones del formulario
 const btnGuardarTarea = document.getElementById('guardar');
 btnGuardarTarea.addEventListener('click', () => {
     agregarTareas();
@@ -17,7 +22,9 @@ const btnEliminarTarea = document.getElementById('eliminar');
 btnEliminarTarea.addEventListener('click', () => {
     eliminarTareas();
 })
+// localStorage.clear();
 
+// Función agregar tareas
 function agregarTareas(){
     const tarea = document.getElementById('tarea').value;
     const fechaInicial = document.getElementById('fechaInicial').value;
@@ -48,14 +55,25 @@ function agregarTareas(){
     //             }
     //         }
     //     }
-    
-    if(!tarea || !fechaInicial || !fechaFinal || !estado){
+
+    let captura = -1;
+    for(let i=0; i<tareasHacer.length; i++){
+        if(tarea==tareasHacer[i][0]){
+            captura=i;
+        }
+    }
+
+    if(!tarea && !fechaInicial && !fechaFinal && !estado){
         alert('Campos vacios!')
     }else{
         if(fechaInicial > fechaFinal){
             alert('Fecha de inicio no puede ser despues de la fecha final')
         }else{
-            tareasHacer.push([tarea, fechaInicial, fechaFinal, estado, dias]);
+            if(captura==-1){
+                tareasHacer.push([tarea, fechaInicial, fechaFinal, estado, dias]);
+            }else{
+                alert('Tarea ya ingresada')
+            }
         }
     }
     
@@ -65,6 +83,7 @@ function agregarTareas(){
     imprimirDatos(tareasHacer, 'datosTareas');
 }
 
+// Función editar tareas agregadas
 function editarTareas(){
     const tarea = document.getElementById('tarea').value;
     const fechaInicial = document.getElementById('fechaInicial').value;
@@ -86,14 +105,41 @@ function editarTareas(){
     console.log(captura);
     if(captura!=-1){
         tareasHacer[captura]=([tarea,fechaInicial,fechaFinal,estado,dias]);
-    }
 
-    localStorage.setItem('matrizTareas', JSON.stringify(tareasHacer));
+        const promesa = new Promise((resolve, reject) => {
+            setTimeout(()=>{
+                if(estado=='Terminado'){
+                    resolve();
+                }else{
+                    reject();
+                };
+            },1000)
+        })
+    
+        promesa
+            .then(resultado => {
+                tareasHacer.splice(captura, 1);
+                tareasTerminadas.push([tarea,fechaInicial,fechaFinal,estado,dias]);
+
+                localStorage.setItem('matrizTareas', JSON.stringify(tareasHacer));
+                localStorage.setItem('matrizTerminadas', JSON.stringify(tareasTerminadas));
+    
+                imprimirDatos(tareasTerminadas, 'datosTareasTerminadas');
+                imprimirDatos(tareasHacer, 'datosTareas');
+            })
+            .catch(error => {
+                console.error(error);
+            })
+            .finally(() => {
+                console.log('Termino el calculo');
+            });
+    };
+
 
     limpiarInputs('tarea','fechaInicial','fechaFinal','estado');
-    imprimirDatos(tareasHacer, 'datosTareas');
 }
 
+// Función eliminar tareas
 function eliminarTareas(){
     const tarea = document.getElementById('tarea').value;
 
@@ -101,11 +147,11 @@ function eliminarTareas(){
             if(indice !== -1){
                 tareasHacer.splice(indice, 1);
             }
-    
     limpiarInputs('tarea','fechaInicial','fechaFinal','estado');
     imprimirDatos(tareasHacer, 'datosTareas');
 }
-// localStorage.clear();
+
+// Función imprimir matrices de tareas
 function imprimirDatos(matriz, id){
     const tabla = document.getElementById(id);
     tabla.innerHTML = '';
@@ -121,6 +167,7 @@ function imprimirDatos(matriz, id){
     });
 }
 
+// Función limpiar inputs 
 function limpiarInputs(dato1, dato2, dato3, dato4){
     document.getElementById(dato1).value = '';
     document.getElementById(dato2).value = '';

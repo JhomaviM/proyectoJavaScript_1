@@ -2,9 +2,16 @@
     margin: 0;
     padding: 0;
 }
-body{
+#body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background: linear-gradient(175deg,rgba(75, 73, 209, 1) 0%, rgba(56, 56, 194, 1) 0%, rgba(0, 212, 255, 1) 100%);
+    position: relative;
+    padding-bottom: 7em;
+    min-height: 100vh;
+}
+body{
+    background: rgba(0, 212, 255, 1);
+    min-height: 100vh;
 }
 .inicio{
     background: radial-gradient(circle,rgba(75, 73, 209, 1) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 212, 255, 1) 100%);
@@ -27,6 +34,12 @@ h2{
     color: rgb(228, 4, 4);
     font-weight: bold;
 }
+h3{
+    color: rgba(230, 73, 53, 0.745);
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
 #encabezado{
     color:blueviolet;
 }
@@ -41,5 +54,12 @@ h2{
 }
 .pie{
     background: rgba(255,255,255,0.3);
+    padding: 3em 0;
     color: brown;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+p{
+    color: darkgreen;
 }
