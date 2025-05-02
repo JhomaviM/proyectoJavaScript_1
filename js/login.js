@@ -27,6 +27,7 @@ function registrar(){
         // Si el usuario no esta se inverta nuevo
         if(!usuarioEncontrado){
             validacion.push({user: nombreUser, password: contraUser});
+            alert('Registro exitoso');
         }else{
             alert('Usuario ya registrado');
         };
